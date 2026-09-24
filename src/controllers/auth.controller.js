@@ -264,18 +264,7 @@ const logOutController = async (req, res) => {
 const logOutAllDeviceController = async (req, res) => {
   try {
     const { user } = req;
-    const sessions = await Session.find({
-      userId: user._id,
-      invoked: false,
-    });
-
-    const hashes =  sessions
-      .map((session) => session.refreshHash)
-      .filter(Boolean);
-    if (hashes.length > 0) {
-      await BlackList.insertMany(hashes.map((hash) => ({ token: hash })));
-    }
-
+  
     const result = await Session.updateMany(
       {
         userId: user._id,
