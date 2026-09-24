@@ -68,7 +68,7 @@ Notes from the code:
 | POST | `/api/v1/auth/register` | No | `name`, `email`, `password` | Creates a user, starts a session, sets cookies, returns user + access token |
 | POST | `/api/v1/auth/login` | No | `email`, `password` | Validates credentials, updates session for same IP/user-agent, sets cookies |
 | GET | `/api/v1/auth/logout` | Yes (`verifyUser`) | Cookies only | Blacklists current refresh token and invalidates that session |
-| GET | `/api/v1/auth/logout-all` | Yes (`verifyUser`) | Cookies only | Blacklists all active refresh hashes for the user |
+| GET | `/api/v1/auth/logout-all` | Yes (`verifyUser`) | Cookies only | The system identifies all active sessions where the user ID matches the current user. For each matching session, it clears the stored refresh token hash by setting it to null and marks the session as revoked. |
 | GET | `/api/v1/auth/rotate-token` | No direct session check in code | Cookies: `refresh_token` | Reissues access + refresh cookies |
 | POST | `/api/v1/account/create` | Yes (`verifyUser`) | `currency` (optional), `status` (optional) | Defaults to `INR` and `ACTIVE`; prevents duplicate account combos |
 | GET | `/api/v1/account/accounts` | Yes (`verifyUser`) | None | Returns accounts owned by the logged-in user |
